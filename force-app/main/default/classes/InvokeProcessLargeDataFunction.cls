@@ -22,7 +22,7 @@ public inherited sharing class InvokeProcessLargeDataFunction {
       // Finding the Function running in the Compute Space
       functions.Function myFunction = functions.Function.get('first.pythonfun');
       //Invoking Functions 
-      //Recomended Approach will be to call Function Asynchronousaly as PDF generation can take Time
+      //This is Sync Invocation Recomended Approach will be to call Function Asynchronousaly as PDF generation can take Time
       functions.FunctionInvocation invocation = myFunction.invoke(Json.serialize(inp));
       // Got the Response from Function Here  
       String jsonResponse = invocation.getResponse();
@@ -32,7 +32,7 @@ public inherited sharing class InvokeProcessLargeDataFunction {
       //TO:Do- Check why extra Characted Returned from Functions
       String correctString = jsonResponse.substring(3, jsonResponse.length()-2);  
       System.debug(correctString); 
-      //Creating an File Recored to be Stored in CRM  
+      //Creating an File Record to be Stored in CRM  
       ContentVersion conver = new ContentVersion();
         conver.Title = 'JOHN Doe Returns';
         conver.PathOnClient = 'JOHN Doe Returns' + '.pdf';
@@ -44,7 +44,7 @@ public inherited sharing class InvokeProcessLargeDataFunction {
         // Link the content document to sObject record in this case it is account 
         ContentDocumentLink condocLink = new ContentDocumentLink();
         condocLink.ContentDocumentId = contentDocumentId;
-      //Link the File to CRM Record  
+      //Link the File to CRM Record, pass Correct ID instead of Hardcoding  
       condocLink.LinkedEntityId = '0012w00001CqL6H';
         condocLink.ShareType = 'V';
         insert condocLink;
